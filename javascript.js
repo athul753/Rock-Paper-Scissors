@@ -1,3 +1,11 @@
+const result=document.querySelector(".results");
+const rock=document.querySelector(".rock");
+const paper=document.querySelector(".paper");
+const scissor=document.querySelector(".scissor");
+const score=document.querySelector(".score");
+let humanscore=0;
+let computerscore=0;
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -15,71 +23,64 @@ else if(ans==2){
 }
 }
 
-
-function gethumanchoice(){
-    let input=prompt("enter rock,paper,scissor");
-    return input.toLowerCase();
-}
-
 function playround(hum,comp){
     let humanchoice=hum;
     let computerchoice=comp;
-    
+    let roundresult="";
     let flag=0;//if flag 1 human wins if 2 computer wins
 
     if(humanchoice==computerchoice){
-        console.log("its a tie");
+        roundresult="its a tie";
     }
-    else if(humanchoice=="rock" && computerchoice=="scissor"){
+    else if(humanchoice==".rock" && computerchoice=="scissor"){
         humanscore++;
-        console.log(`${humanchoice} beats ${computerchoice}`);
+        //console.log(`${humanchoice} beats ${computerchoice}`);
+        roundresult="rock beats scissor - human wins";
     }
-    else if(humanchoice=="paper" && computerchoice=="rock"){
+    else if(humanchoice==".paper" && computerchoice=="rock"){
         humanscore++;
-        console.log(`${humanchoice} beats ${computerchoice}`);
+        //console.log(`${humanchoice} beats ${computerchoice}`);
+        roundresult="paper beats rock - human wins";
     }
-    else if(humanchoice=="scissor" && computerchoice=="paper"){
+    else if(humanchoice==".scissor" && computerchoice=="paper"){
         humanscore++;
-        console.log(`${humanchoice} beats ${computerchoice}`);       
+        //console.log(`${humanchoice} beats ${computerchoice}`);       
+        roundresult="scissor beats paper - human wins";
     }
-    else if(computerchoice=="rock" && humanchoice=="scissor"){
+    else if(computerchoice=="rock" && humanchoice==".scissor"){
         computerscore++;
-        console.log(`${computerchoice} beats ${humanchoice}`);
+        //console.log(`${computerchoice} beats ${humanchoice}`);
+        roundresult="rock beats scissor - computer wins";
     }
-    else if(computerchoice=="paper" && humanchoice=="rock"){
+    else if(computerchoice=="paper" && humanchoice==".rock"){
         computerscore++;
-        console.log(`${computerchoice} beats ${humanchoice}`);  
+        //console.log(`${computerchoice} beats ${humanchoice}`);  
+        roundresult="paper beats rock - computer wins";
       }
-    else if(computerchoice=="scissor" && humanchoice=="paper"){
+    else if(computerchoice=="scissor" && humanchoice==".paper"){
         computerscore++;
-        console.log(`${computerchoice} beats ${humanchoice}`);
+        //console.log(`${computerchoice} beats ${humanchoice}`);
+        roundresult="scissor beats paper - computer wins";
         }
     else{
-        console.log("invalid choice!");
+        roundresult="its a tie";
     }
+return humanscore, computerscore, (result.textContent = roundresult), score.textContent = `Human: ${humanscore} | Computer: ${computerscore}`;
+
 }
 
-let humanscore=0;
-let computerscore=0;
+function alertfun(humch){
+    const computerchoice=getComputerchoice();
+    playround(humch,computerchoice);
+}
 
-function playgame(){
-for(let i=0;i<5;i++){
-const humanChoice=gethumanchoice();
-const computerChoice=getComputerchoice();
-console.log(`You chose: ${humanChoice}`);
-console.log(`Computer chose: ${computerChoice}`);
-playround(humanChoice, computerChoice);
-console.log(`Score - You: ${humanscore}, Computer: ${computerscore}`);
-}
-}
-playgame();
-if(humanscore>computerscore){
-    console.log("You won the game");
-}
-else if(computerscore>humanscore){
-    console.log("You lost the game");
-}
-else{
-    console.log("Player and computer both got equal points");
-}
+paper.onclick=()=>alertfun(".paper");
+
+
+rock.addEventListener('click',()=>alertfun(".rock"));
+
+scissor.addEventListener("click", () => {
+    const computerSelection = getComputerchoice();
+    playround(".scissor", computerSelection);
+});
 
